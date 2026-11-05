@@ -21,6 +21,7 @@
 @media (min-width: 900px) { .eroe { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); padding: 64px 0 56px; } }
 .eroe h1 { font-size: clamp(2.6rem, 9vw, 5.2rem); line-height: 0.95; }
 .eroe__sotto { font-size: 1.15rem; color: var(--tenue); max-width: 34ch; margin: 0 0 24px; }
+.eroe h1 + .eroe__pulsanti { margin-top: 28px; }
 .eroe__pulsanti { display: flex; flex-wrap: wrap; gap: 12px; }
 
 .contatori { display: flex; gap: 28px; margin: 30px 0 0; }
