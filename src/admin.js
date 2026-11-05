@@ -1,6 +1,7 @@
 import { zipSync, strToU8 } from 'fflate';
 import { avviaPagina } from './layout.js';
 import { supabase } from './supabase.js';
+import { SUPABASE_URL, SUPABASE_KEY } from './config.js';
 import { comprimiFoto } from './foto.js';
 import { conFiligrana } from './filigrana.js';
 import {
@@ -458,17 +459,22 @@ async function eliminaAnnuncio(a) {
 }
 
 // =====================================================================
-//  Email (attivate nel passo dedicato: per ora non fanno nulla)
+//  Email al venditore (funzione "notifica" su Supabase)
 // =====================================================================
 async function notifica(evento, id) {
   try {
     const { data: { session } } = await supabase.auth.getSession();
-    const r = await fetch('/api/notifica', {
+    const r = await fetch(`${SUPABASE_URL}/functions/v1/notifica`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session?.access_token}` },
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: SUPABASE_KEY,
+        Authorization: `Bearer ${session?.access_token}`,
+      },
       body: JSON.stringify({ evento, id }),
     });
-    return r.ok;
+    const esito = await r.json().catch(() => ({}));
+    return r.ok && esito.inviata;
   } catch {
     return false;
   }
@@ -546,7 +552,7 @@ const azioni = {
       rifiutato_il: null, archiviato_il: null,
     });
     const email = await notifica('approvato', a.id);
-    avviso(`${a.codice} pubblicato nel catalogo ✓${email ? ' · Email inviata al venditore' : ' · (email al venditore non ancora attiva)'}`);
+    avviso(`${a.codice} pubblicato nel catalogo ✓${email ? ' · Email inviata al venditore' : ' · ⚠️ Email al venditore NON inviata'}`);
     await ricarica();
   },
 
@@ -556,7 +562,7 @@ const azioni = {
     await ritiraFotoPubbliche(a);
     await cambiaStato(a, { stato: 'rifiutato', rifiutato_il: new Date().toISOString() });
     const email = await notifica('rifiutato', a.id);
-    avviso(`${a.codice} rifiutato${email ? ' · Email inviata al venditore' : ' · (email al venditore non ancora attiva)'}`);
+    avviso(`${a.codice} rifiutato${email ? ' · Email inviata al venditore' : ' · ⚠️ Email al venditore NON inviata'}`);
     await ricarica();
   },
 

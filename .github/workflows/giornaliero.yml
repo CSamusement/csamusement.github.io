@@ -1,6 +1,6 @@
 # Controllo automatico giornaliero
 #  - "sveglia" Supabase, così il piano gratuito non va in pausa per inattività
-#  - (in seguito) scadenze a 6 mesi e cancellazioni automatiche
+#  - scadenze a 6 mesi, cancellazione rifiutati dopo 12 mesi, pulizia foto abbandonate
 name: Controllo giornaliero
 
 on:
@@ -20,6 +20,15 @@ jobs:
           curl -sf "https://hocxpkmphqjpqeghtxff.supabase.co/rest/v1/impostazioni?select=id" \
             -H "apikey: sb_publishable_kaisOm2pfk-BezdQZkY53w__E1vXeah" > /dev/null
           echo "Supabase risponde ✓"
+
+      - name: Scadenze 6 mesi, cancellazioni 12 mesi, pulizia foto
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          if [ -z "$CRON_SECRET" ]; then echo "Segreto CRON_SECRET non impostato: salto"; exit 0; fi
+          curl -sf -X POST "https://hocxpkmphqjpqeghtxff.supabase.co/functions/v1/giornaliero" \
+            -H "x-cron-secret: $CRON_SECRET"
+          echo
 
       # GitHub sospende i controlli programmati dopo 60 giorni senza modifiche al codice:
       # questo passo lo impedisce (senza creare modifiche finte).

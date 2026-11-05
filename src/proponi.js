@@ -1,6 +1,7 @@
 import { avviaPagina, AUTOSCONTRO_SVG } from './layout.js';
 import { supabase } from './supabase.js';
 import { comprimiFoto } from './foto.js';
+import { SUPABASE_URL, SUPABASE_KEY } from './config.js';
 
 avviaPagina({ attiva: 'proponi' });
 
@@ -185,7 +186,15 @@ modulo.addEventListener('submit', async (e) => {
     });
     if (error) throw new Error(error.message || 'Invio non riuscito. Riprova.');
 
-    // 3. Conferma
+    // 3. Avviso a CS Amusement (se non riesce, la proposta resta comunque salvata)
+    fetch(`${SUPABASE_URL}/functions/v1/notifica`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` },
+      body: JSON.stringify({ evento: 'nuova', codice }),
+      keepalive: true,
+    }).catch(() => {});
+
+    // 4. Conferma
     $('codice').textContent = codice;
     $('pagina-modulo').hidden = true;
     $('pagina-conferma').hidden = false;
