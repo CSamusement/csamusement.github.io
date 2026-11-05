@@ -3,3 +3,5 @@ dist
 .env
 .netlify
 .anteprime
+Screenshot*.png
+*.screenshot.png
