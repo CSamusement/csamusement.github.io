@@ -27,6 +27,7 @@ jobs:
         run: |
           if [ -z "$CRON_SECRET" ]; then echo "Segreto CRON_SECRET non impostato: salto"; exit 0; fi
           curl -sf -X POST "https://hocxpkmphqjpqeghtxff.supabase.co/functions/v1/giornaliero" \
+            -H "apikey: sb_publishable_kaisOm2pfk-BezdQZkY53w__E1vXeah" \
             -H "x-cron-secret: $CRON_SECRET"
           echo
 
