@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="it" data-tema="A">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vendi la tua vettura · Autoscontri usati CS Amusement</title>
+  <meta name="description" content="Proponi in vendita i tuoi autoscontri usati tramite CS Amusement.">
+  <meta name="referrer" content="no-referrer">
+  <link rel="icon" href="/logo-piccolo.png">
+  <script type="module" src="/src/proponi.js"></script>
+</head>
+<body>
+<main>
+  <section id="pagina-modulo">
+    <div class="intro">
+      <h1>Vendi i tuoi autoscontri</h1>
+      <p>Compila il modulo in pochi minuti. Gli acquirenti contatteranno CS Amusement, non te: i tuoi dati restano riservati.</p>
+    </div>
+
+    <div class="avviso" role="note">
+      <span class="avviso__icona" aria-hidden="true">⏳</span>
+      <span>Il tuo annuncio sarà pubblicato solo dopo l'approvazione di CS Amusement.</span>
+    </div>
+
+    <form id="modulo" class="modulo" novalidate>
+
+      <fieldset class="riquadro">
+        <legend>1 · La vettura</legend>
+        <div class="campi">
+
+          <div class="campo">
+            <span class="etichetta" id="et-tipo">Tipo di vettura</span>
+            <div class="scelte scelte--grandi" role="radiogroup" aria-labelledby="et-tipo">
+              <label class="scelta"><input type="radio" name="tipo" value="adulti" required><span><svg class="ico-tipo" viewBox="0 0 120 80" aria-hidden="true"></svg>Adulti</span></label>
+              <label class="scelta scelta--midi"><input type="radio" name="tipo" value="midi"><span><svg class="ico-tipo" viewBox="0 0 120 80" aria-hidden="true"></svg>Midi</span></label>
+              <label class="scelta scelta--mini"><input type="radio" name="tipo" value="mini"><span><svg class="ico-tipo" viewBox="0 0 120 80" aria-hidden="true"></svg>Mini</span></label>
+            </div>
+          </div>
+
+          <div class="campi campi--due">
+            <div class="campo">
+              <label for="modello">Modello</label>
+              <select id="modello" name="modello" required>
+                <option value="">Caricamento…</option>
+              </select>
+            </div>
+            <div class="campo" id="campo-modello-altro" hidden>
+              <label for="modello_altro">Scrivi il modello</label>
+              <input type="text" id="modello_altro" name="modello_altro" maxlength="80" autocomplete="off">
+            </div>
+          </div>
+
+          <div class="campi campi--due">
+            <div class="campo">
+              <label for="anno">Anno</label>
+              <input type="number" id="anno" name="anno" inputmode="numeric" min="1950" required placeholder="es. 2015">
+            </div>
+            <div class="campo">
+              <label for="quantita">Quantità <span class="facoltativo">(numero di vetture)</span></label>
+              <input type="number" id="quantita" name="quantita" inputmode="numeric" min="1" max="500" value="1" required>
+            </div>
+          </div>
+
+          <div class="campo">
+            <span class="etichetta" id="et-condizione">Stato</span>
+            <div class="scelte" role="radiogroup" aria-labelledby="et-condizione">
+              <label class="scelta"><input type="radio" name="condizione" value="ottimo" required><span>Ottimo</span></label>
+              <label class="scelta"><input type="radio" name="condizione" value="buono"><span>Buono</span></label>
+              <label class="scelta"><input type="radio" name="condizione" value="da_revisionare"><span>Da revisionare</span></label>
+            </div>
+          </div>
+
+          <div class="campi campi--due">
+            <div class="campo">
+              <label for="disponibile_da">Disponibile da</label>
+              <input type="date" id="disponibile_da" name="disponibile_da" required>
+            </div>
+            <div class="campo">
+              <span class="etichetta" id="et-paese">Dove si trova</span>
+              <div class="scelte" role="radiogroup" aria-labelledby="et-paese">
+                <label class="scelta"><input type="radio" name="paese" value="italia" required checked><span>Italia</span></label>
+                <label class="scelta"><input type="radio" name="paese" value="estero"><span>Estero</span></label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="riquadro">
+        <legend>2 · Prezzo</legend>
+        <div class="campi">
+          <div class="campo">
+            <label for="prezzo">Prezzo per singola vettura, in € <span class="facoltativo">(facoltativo)</span></label>
+            <input type="number" id="prezzo" name="prezzo" inputmode="decimal" min="0" step="1" placeholder="es. 3500">
+          </div>
+          <label class="casella">
+            <input type="checkbox" id="mostra_prezzo" name="mostra_prezzo" disabled>
+            <span>Mostra il prezzo nell'annuncio <span class="facoltativo">(se non lo spunti, comparirà "Trattativa riservata")</span></span>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset class="riquadro">
+        <legend>3 · Caratteristiche</legend>
+        <p class="riquadro__nota">Spunta tutto quello che ha la vettura.</p>
+        <div class="campi">
+          <div class="scelte" id="caratteristiche"></div>
+          <div class="campo">
+            <label for="note">Altre note <span class="facoltativo">(facoltativo)</span></label>
+            <textarea id="note" name="note" maxlength="2000" placeholder="es. motore revisionato nel 2023, carrozzeria con piccoli graffi…"></textarea>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="riquadro">
+        <legend>4 · Foto</legend>
+        <p class="riquadro__nota">Fino a 20 foto: puoi aggiungerle anche in più volte. Le comprimiamo noi e togliamo i dati nascosti (posizione GPS, modello del telefono…). La prima foto sarà quella di copertina.</p>
+        <label class="zona-foto" id="zona-foto">
+          <span class="zona-foto__icona" aria-hidden="true">📷</span>
+          <strong>Aggiungi foto</strong>
+          <small>Tocca per scattare o scegliere dalla galleria (puoi selezionarne più di una)</small>
+          <input type="file" id="foto" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" multiple class="solo-lettori">
+        </label>
+        <div class="anteprime" id="anteprime" aria-live="polite"></div>
+      </fieldset>
+
+      <fieldset class="riquadro">
+        <legend>5 · I tuoi dati</legend>
+        <p class="riquadro__nota">🔒 Non saranno mai pubblicati. Servono solo a CS Amusement per contattarti e avvisarti sull'annuncio.</p>
+        <div class="campi">
+          <div class="campo">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome" maxlength="100" autocomplete="name" required>
+          </div>
+          <div class="campi campi--due">
+            <div class="campo">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" maxlength="200" autocomplete="email" required>
+            </div>
+            <div class="campo">
+              <label for="telefono">Telefono <span class="facoltativo">(facoltativo)</span></label>
+              <input type="tel" id="telefono" name="telefono" maxlength="40" autocomplete="tel">
+            </div>
+          </div>
+
+          <div class="trappola" aria-hidden="true">
+            <label for="sito_web">Non compilare questo campo</label>
+            <input type="text" id="sito_web" name="sito_web" tabindex="-1" autocomplete="off">
+          </div>
+
+          <label class="casella">
+            <input type="checkbox" id="consenso" name="consenso" required>
+            <span>Ho letto e accetto l'<a href="/privacy.html" target="_blank">Informativa Privacy</a> e le <a href="/condizioni.html" target="_blank">Condizioni d'uso</a>. Dichiaro di essere il proprietario delle vetture proposte.</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="errore" id="errore" role="alert" hidden></div>
+
+      <div class="invio">
+        <button type="submit" class="pulsante" id="invia">Invia la proposta</button>
+        <p class="invio__stato" id="stato-invio" aria-live="polite"></p>
+      </div>
+    </form>
+  </section>
+
+  <section id="pagina-conferma" class="conferma" hidden tabindex="-1">
+    <div id="conferma-auto"></div>
+    <h2>Proposta inviata, grazie!</h2>
+    <p>Il codice della tua proposta è</p>
+    <div class="conferma__codice" id="codice"></div>
+    <p>CS Amusement la controllerà al più presto. Riceverai un'email quando sarà approvata e pubblicata nel catalogo.</p>
+    <p><a class="pulsante pulsante--secondario" href="/proponi.html">Proponi un'altra vettura</a></p>
+  </section>
+</main>
+</body>
+</html>

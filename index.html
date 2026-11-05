@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="it" data-tema="A">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Autoscontri usati · CS Amusement</title>
+  <meta name="description" content="Autoscontri usati selezionati e verificati da CS Amusement: per adulti, midi e mini, in Italia e all'estero.">
+  <meta name="referrer" content="no-referrer">
+  <link rel="icon" href="/logo-piccolo.png">
+  <script type="module" src="/src/catalogo.js"></script>
+</head>
+<body>
+<main class="catalogo">
+
+  <section class="eroe" aria-labelledby="titolo-eroe">
+    <div class="eroe__testo">
+      <p class="occhiello">Il mercato dell'usato di CS Amusement</p>
+      <h1 id="titolo-eroe">Autoscontri usati,<br><span class="evidenza">scelti da noi.</span></h1>
+      <p class="eroe__sotto">Ogni vettura è controllata da CS Amusement prima di essere pubblicata. Ci scrivi, ti seguiamo noi dall'inizio alla fine.</p>
+      <div class="eroe__pulsanti">
+        <a class="pulsante" href="#vetrina">Guarda le vetture</a>
+        <a class="pulsante pulsante--secondario" href="/proponi.html">Vendi le tue</a>
+      </div>
+      <dl class="contatori" aria-live="polite">
+        <div><dt>Disponibili</dt><dd id="n-disponibili">–</dd></div>
+        <div><dt>Già vendute</dt><dd id="n-venduti">–</dd></div>
+        <div><dt>Verificate</dt><dd>100%</dd></div>
+      </dl>
+    </div>
+    <div class="arena" aria-hidden="true">
+      <div class="arena__pista">
+        <div class="arena__auto arena__auto--1"></div>
+        <div class="arena__auto arena__auto--2"></div>
+        <div class="arena__auto arena__auto--3"></div>
+        <span class="arena__botto arena__botto--1">BUMP!</span>
+        <span class="arena__botto arena__botto--2">BONK!</span>
+      </div>
+      <div class="arena__rete"></div>
+    </div>
+  </section>
+
+  <section id="vetrina" class="vetrina" aria-labelledby="titolo-vetrina">
+    <div class="vetrina__testa">
+      <h2 id="titolo-vetrina">Le vetture</h2>
+      <div class="interruttore" role="tablist" aria-label="Mostra">
+        <a href="/#vetrina" role="tab" id="tab-disponibili">Disponibili</a>
+        <a href="/?vista=venduti#vetrina" role="tab" id="tab-venduti">Venduti</a>
+      </div>
+    </div>
+
+    <details class="filtri" id="filtri">
+      <summary><span>Filtri</span> <b id="n-filtri"></b></summary>
+      <form id="form-filtri" class="filtri__corpo">
+        <div class="filtri__gruppo filtri__gruppo--largo">
+          <span class="etichetta">Tipo</span>
+          <div class="scelte scelte--piccole">
+            <label class="scelta"><input type="radio" name="tipo" value="" checked><span>Tutti</span></label>
+            <label class="scelta"><input type="radio" name="tipo" value="adulti"><span>Adulti</span></label>
+            <label class="scelta"><input type="radio" name="tipo" value="midi"><span>Midi</span></label>
+            <label class="scelta"><input type="radio" name="tipo" value="mini"><span>Mini</span></label>
+          </div>
+        </div>
+        <div class="filtri__gruppo"><label for="f-modello">Modello</label>
+          <select id="f-modello" name="modello"><option value="">Tutti</option></select></div>
+        <div class="filtri__gruppo"><label for="f-anno">Anno</label>
+          <select id="f-anno" name="anno"><option value="">Qualsiasi</option></select></div>
+        <div class="filtri__gruppo"><label for="f-condizione">Stato</label>
+          <select id="f-condizione" name="condizione">
+            <option value="">Qualsiasi</option><option value="ottimo">Ottimo</option>
+            <option value="buono">Buono</option><option value="da_revisionare">Da revisionare</option>
+          </select></div>
+        <div class="filtri__gruppo"><label for="f-paese">Dove</label>
+          <select id="f-paese" name="paese">
+            <option value="">Ovunque</option><option value="italia">Italia</option><option value="estero">Estero</option>
+          </select></div>
+        <div class="filtri__gruppo"><label for="f-disp">Disponibilità</label>
+          <select id="f-disp" name="disponibilita">
+            <option value="">Qualsiasi</option><option value="subito">Disponibile subito</option>
+            <option value="presto">Prossimamente</option>
+          </select></div>
+        <div class="filtri__gruppo filtri__gruppo--largo">
+          <span class="etichetta">Caratteristiche</span>
+          <div class="scelte scelte--piccole" id="f-caratteristiche"></div>
+        </div>
+        <button type="reset" class="link">Azzera filtri</button>
+      </form>
+    </details>
+
+    <p class="risultati" id="risultati" aria-live="polite"></p>
+    <div class="griglia" id="griglia"></div>
+  </section>
+
+  <section class="come" aria-labelledby="titolo-come">
+    <h2 id="titolo-come">Hai autoscontri da vendere?</h2>
+    <ol class="come__passi">
+      <li><b>1</b><h3>Proponi</h3><p>Compili il modulo con foto e dati in pochi minuti.</p></li>
+      <li><b>2</b><h3>Verifichiamo</h3><p>CS Amusement controlla la proposta prima di pubblicarla.</p></li>
+      <li><b>3</b><h3>Ci pensiamo noi</h3><p>Gli interessati contattano noi: i tuoi dati restano riservati.</p></li>
+    </ol>
+    <a class="pulsante" href="/proponi.html">Proponi le tue vetture</a>
+  </section>
+</main>
+</body>
+</html>

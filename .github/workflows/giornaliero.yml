@@ -1,0 +1,26 @@
+# Controllo automatico giornaliero
+#  - "sveglia" Supabase, così il piano gratuito non va in pausa per inattività
+#  - (in seguito) scadenze a 6 mesi e cancellazioni automatiche
+name: Controllo giornaliero
+
+on:
+  schedule:
+    - cron: '17 6 * * *'   # ogni giorno alle 6:17 UTC
+  workflow_dispatch:
+
+permissions:
+  actions: write   # serve solo a tenere attivo questo controllo (vedi ultimo passo)
+
+jobs:
+  controllo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sveglia Supabase
+        run: |
+          curl -sf "https://hocxpkmphqjpqeghtxff.supabase.co/rest/v1/impostazioni?select=id" \
+            -H "apikey: sb_publishable_kaisOm2pfk-BezdQZkY53w__E1vXeah" > /dev/null
+          echo "Supabase risponde ✓"
+
+      # GitHub sospende i controlli programmati dopo 60 giorni senza modifiche al codice:
+      # questo passo lo impedisce (senza creare modifiche finte).
+      - uses: liskin/gh-workflow-keepalive@v1
