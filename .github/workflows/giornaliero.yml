@@ -33,4 +33,5 @@ jobs:
 
       # GitHub sospende i controlli programmati dopo 60 giorni senza modifiche al codice:
       # questo passo lo impedisce (senza creare modifiche finte).
-      - uses: liskin/gh-workflow-keepalive@v1
+      # bloccato su una versione precisa (v1.2.1): se l'autore la cambiasse, qui non cambia nulla
+      - uses: liskin/gh-workflow-keepalive@f72ff1a1336129f29bf0166c0fd0ca6cf1bcb38c # v1.2.1
