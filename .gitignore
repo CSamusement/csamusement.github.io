@@ -6,3 +6,9 @@ dist
 Screenshot*.png
 *.screenshot.png
 segreti*.txt
+
+# Strumenti per l'assistente e screenshot: non vanno nel sito pubblico
+.claude/
+.agents/
+skills-lock.json
+Immagine*.jpg
