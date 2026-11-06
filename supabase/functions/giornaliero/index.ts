@@ -1,7 +1,7 @@
 // =====================================================================
 //  Funzione "giornaliero": lavori automatici, chiamata ogni mattina da GitHub
 //   1. Annunci pubblicati da 6 mesi → email al venditore + riepilogo a CS Amusement
-//   2. Proposte rifiutate da oltre 12 mesi → cancellate con dati e foto
+//   2. Proposte rifiutate, annunci venduti o archiviati da oltre 12 mesi → cancellati con dati e foto
 //   3. Foto caricate da moduli abbandonati (oltre 24 ore) → cancellate
 //  Da incollare in Supabase > Edge Functions > Deploy a new function > Via Editor
 //  Nome della funzione: giornaliero
@@ -81,10 +81,11 @@ async function scadenze() {
   return avvisati.length;
 }
 
-// ---------- 2. Rifiutati da oltre 12 mesi ----------
-async function cancellaRifiutati() {
-  const { data } = await db.from('annunci').select('id, foto(path_privato, path_pubblico)')
-    .eq('stato', 'rifiutato').lte('rifiutato_il', fa(12));
+// ---------- 2. Rifiutati, venduti e archiviati da oltre 12 mesi ----------
+async function cancellaVecchi(stato: string, colonna: string) {
+  const { data, error } = await db.from('annunci').select('id, foto(path_privato, path_pubblico)')
+    .eq('stato', stato).lte(colonna, fa(12));
+  if (error) throw error;
   for (const a of data ?? []) {
     const privati = (a.foto ?? []).map((f: any) => f.path_privato);
     const pubblici = (a.foto ?? []).map((f: any) => f.path_pubblico).filter(Boolean);
@@ -122,7 +123,11 @@ Deno.serve(async (req) => {
   }
   const esito: Record<string, unknown> = {};
   for (const [nome, lavoro] of [
-    ['scadenze_avvisate', scadenze], ['rifiutati_cancellati', cancellaRifiutati], ['foto_orfane_cancellate', pulisciFotoOrfane],
+    ['scadenze_avvisate', scadenze],
+    ['rifiutati_cancellati', () => cancellaVecchi('rifiutato', 'rifiutato_il')],
+    ['venduti_cancellati', () => cancellaVecchi('venduto', 'venduto_il')],
+    ['archiviati_cancellati', () => cancellaVecchi('archiviato', 'archiviato_il')],
+    ['foto_orfane_cancellate', pulisciFotoOrfane],
   ] as const) {
     try { esito[nome] = await lavoro(); } catch (err) { console.error(nome, err); esito[nome] = 'errore'; }
   }
